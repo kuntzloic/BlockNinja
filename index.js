@@ -1000,6 +1000,7 @@ const createBurst = (() => {
 	}
 
 	return (target, force=1) => {
+		return;
 		// Calculate fragment positions, and what would have been the previous positions
 		// when still a part of the larger target.
 		transformVertices(
@@ -1106,12 +1107,12 @@ function sparkBurst(x, y, count, maxSpeed) {
 	for (let i=0; i<count; i++) {
 		const angle = i * angleInc + angleInc * Math.random();
 		const speed = (1 - Math.random() ** 3) * maxSpeed;
-		addSpark(
-			x,
-			y,
-			Math.sin(angle) * speed,
-			Math.cos(angle) * speed
-		);
+		// addSpark(
+		// 	x,
+		// 	y,
+		// 	Math.sin(angle) * speed,
+		// 	Math.cos(angle) * speed
+		// );
 	}
 }
 
@@ -1871,21 +1872,21 @@ function draw(ctx, width, height, viewScale) {
 	// Touch Strokes
 	// ---------------
 
-	ctx.strokeStyle = touchTrailColor;
-	const touchPointCount = touchPoints.length;
-	for (let i=1; i<touchPointCount; i++) {
-		const current = touchPoints[i];
-		const prev = touchPoints[i-1];
-		if (current.touchBreak || prev.touchBreak) {
-			continue;
-		}
-		const scale = current.life / touchPointLife;
-		ctx.lineWidth = scale * touchTrailThickness;
-		ctx.beginPath();
-		ctx.moveTo(prev.x, prev.y);
-		ctx.lineTo(current.x, current.y);
-		ctx.stroke();
-	}
+	// ctx.strokeStyle = touchTrailColor;
+	// const touchPointCount = touchPoints.length;
+	// for (let i=1; i<touchPointCount; i++) {
+	// 	const current = touchPoints[i];
+	// 	const prev = touchPoints[i-1];
+	// 	if (current.touchBreak || prev.touchBreak) {
+	// 		continue;
+	// 	}
+	// 	const scale = current.life / touchPointLife;
+	// 	ctx.lineWidth = scale * touchTrailThickness;
+	// 	ctx.beginPath();
+	// 	ctx.moveTo(prev.x, prev.y);
+	// 	ctx.lineTo(current.x, current.y);
+	// 	ctx.stroke();
+	// }
 
 	PERF_END('draw2D');
 
