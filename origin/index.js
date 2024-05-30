@@ -32,7 +32,7 @@ let pointerScreen = { x: 0, y: 0 };
 // Same as `pointerScreen`, but converted to scene coordinates in rAF.
 let pointerScene = { x: 0, y: 0 };
 // Minimum speed of pointer before "hits" are counted.
-const minPointerSpeed = 60;
+const minPointerSpeed = 0;
 // The hit speed affects the direction the target post-hit. This number dampens that force.
 const hitDampening = 0.1;
 // Backboard receives shadows and is the farthest negative Z position of entities.
