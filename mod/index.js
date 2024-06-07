@@ -25,6 +25,8 @@ const slowmoThreshold = 10;
 const strongThreshold = 25;
 const spinnerThreshold = 25;
 
+let lives = 3;
+
 // Interaction state
 let pointerIsDown = false;
 // The last known position of the primary pointer in screen coordinates.`
@@ -1171,7 +1173,7 @@ function renderScoreHud() {
 		scoreNode.style.display = 'none';
 		cubeCountNode.style.opacity = 1;
 	} else {
-		scoreNode.innerText = `SCORE: ${state.game.score}`;
+		scoreNode.innerText = `SCORE: ${state.game.score} LIVES: ${lives}`;
 		scoreNode.style.display = 'block';
 		cubeCountNode.style.opacity = 0.65 ;
 	}
@@ -1384,10 +1386,15 @@ function resumeGame() {
 
 function endGame() {
 	handleCanvasPointerUp();
-	if (isNewHighScore()) {
-		setHighScore(state.game.score);
+	lives--;
+	renderScoreHud();
+	if (lives <= 0) {
+		if (isNewHighScore()) {
+			setHighScore(state.game.score);
+		}
+		setActiveMenu(MENU_SCORE);
+		lives = 3;
 	}
-	setActiveMenu(MENU_SCORE);
 }
 
 ////////////////////////
