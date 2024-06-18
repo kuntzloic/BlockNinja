@@ -95,7 +95,6 @@ const allShadowPolys = [];
 
 // Game Modes
 const GAME_MODE_RANKED = Symbol('GAME_MODE_RANKED');
-const GAME_MODE_CASUAL = Symbol('GAME_MODE_CASUAL');
 
 // Available Menus
 const MENU_MAIN = Symbol('MENU_MAIN');
@@ -131,7 +130,6 @@ const state = {
 
 const isInGame = () => !state.menus.active;
 const isMenuVisible = () => !!state.menus.active;
-const isCasualGame = () => state.game.mode === GAME_MODE_CASUAL;
 const isPaused = () => state.menus.active === MENU_PAUSE;
 
 
@@ -1168,14 +1166,9 @@ const scoreNode = $('.score-lbl');
 const cubeCountNode = $('.cube-count-lbl');
 
 function renderScoreHud() {
-	if (isCasualGame()) {
-		scoreNode.style.display = 'none';
-		cubeCountNode.style.opacity = 1;
-	} else {
-		scoreNode.innerText = `SCORE: ${state.game.score} LIVES: ${lives}`;
-		scoreNode.style.display = 'block';
-		cubeCountNode.style.opacity = 0.65 ;
-	}
+	scoreNode.innerText = `SCORE: ${state.game.score} LIVES: ${lives}`;
+	scoreNode.style.display = 'block';
+	cubeCountNode.style.opacity = 0.65 ;
 	cubeCountNode.innerText = `CUBES SMASHED: ${state.game.cubeCount}`;
 }
 
@@ -1264,12 +1257,6 @@ handleClick($('.play-normal-btn'), () => {
 	resetGame();
 });
 
-handleClick($('.play-casual-btn'), () => {
-	setGameMode(GAME_MODE_CASUAL);
-	setActiveMenu(null);
-	resetGame();
-});
-
 // Pause Menu
 handleClick($('.resume-btn'), () => resumeGame());
 handleClick($('.menu-btn--pause'), () => setActiveMenu(MENU_MAIN));
@@ -1289,12 +1276,6 @@ handleClick($('.menu-btn--score'), () => setActiveMenu(MENU_MAIN));
 // Main Menu
 handleClick($('.play-normal-btn'), () => {
 	setGameMode(GAME_MODE_RANKED);
-	setActiveMenu(null);
-	resetGame();
-});
-
-handleClick($('.play-casual-btn'), () => {
-	setGameMode(GAME_MODE_CASUAL);
 	setActiveMenu(null);
 	resetGame();
 });
@@ -1552,11 +1533,7 @@ function tick(width, height, simTime, simSpeed, lag) {
 			targets.splice(i, 1);
 			returnTarget(target);
 			if (isInGame()) {
-				if (isCasualGame()) {
-					incrementScore(-25);
-				} else {
-					endGame();
-				}
+				endGame();
 			}
 			continue;
 		}
